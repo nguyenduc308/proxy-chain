@@ -21,9 +21,8 @@ interface DirectOpts {
 }
 
 /**
- * Directly connects to the target.
- * Client -> Apify (CONNECT) -> Web
- * Client <- Apify (CONNECT) <- Web
+ * Client -> Apify (CONNECT) -> Upstream (SOCKS) -> Web
+ * Client <- Apify (CONNECT) <- Upstream (SOCKS) <- Web
  */
 export const tunnelSocks = async ({
     request,
