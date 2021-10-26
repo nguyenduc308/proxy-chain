@@ -1,4 +1,4 @@
-const { Server } = require('proxy-chain');
+const { Server } = require('..');
 
 const server = new Server({
     // Port where the server will listen. By default 8000.
@@ -22,7 +22,7 @@ const server = new Server({
     // * isHttp       - If true, this is a HTTP request, otherwise it's a HTTP CONNECT tunnel for SSL
     //                  or other protocols
     // * connectionId - Unique ID of the HTTP connection. It can be used to obtain traffic statistics.
-    prepareRequestFunction: ({ request, username, password, hostname, port, isHttp, connectionId }) => {
+    prepareRequestFunction: ({ }) => {
         return {
             // If set to true, the client is sent HTTP 407 resposne with the Proxy-Authenticate header set,
             // requiring Basic authentication. Here you can verify user credentials.
