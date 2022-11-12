@@ -1,7 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.listenConnectAnonymizedProxy = exports.closeAnonymizedProxy = exports.anonymizeProxy = void 0;
-const url_1 = require("url");
 const server_1 = require("./server");
 const nodeify_1 = require("./utils/nodeify");
 // Dictionary, key is value returned from anonymizeProxy(), value is Server instance.
@@ -11,14 +10,6 @@ const anonymizedProxyUrlToServer = {};
  * starts an open local proxy server that forwards to the upstream proxy.
  */
 const anonymizeProxy = (proxyUrl, callback) => {
-    const parsedProxyUrl = new url_1.URL(proxyUrl);
-    if (parsedProxyUrl.protocol !== 'http:') {
-        throw new Error('Invalid "proxyUrl" option: only HTTP proxies are currently supported.');
-    }
-    // If upstream proxy requires no password, return it directly
-    if (!parsedProxyUrl.username && !parsedProxyUrl.password) {
-        return (0, nodeify_1.nodeify)(Promise.resolve(proxyUrl), callback);
-    }
     let server;
     const startServer = () => {
         return Promise.resolve()
