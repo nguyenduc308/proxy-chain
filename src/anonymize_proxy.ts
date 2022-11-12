@@ -4,6 +4,8 @@ import { Buffer } from 'buffer';
 import { URL } from 'url';
 import { Server } from './server';
 import { nodeify } from './utils/nodeify';
+import { tunnelSocks } from './socks/tunnelSocks';
+import { forwardSocks } from './socks/forwardSocks';
 
 // Dictionary, key is value returned from anonymizeProxy(), value is Server instance.
 const anonymizedProxyUrlToServer: Record<string, Server> = {};
@@ -13,16 +15,6 @@ const anonymizedProxyUrlToServer: Record<string, Server> = {};
  * starts an open local proxy server that forwards to the upstream proxy.
  */
 export const anonymizeProxy = (proxyUrl: string, callback?: (error: Error | null) => void): Promise<string> => {
-    const parsedProxyUrl = new URL(proxyUrl);
-    if (parsedProxyUrl.protocol !== 'http:') {
-        throw new Error('Invalid "proxyUrl" option: only HTTP proxies are currently supported.');
-    }
-
-    // If upstream proxy requires no password, return it directly
-    if (!parsedProxyUrl.username && !parsedProxyUrl.password) {
-        return nodeify(Promise.resolve(proxyUrl), callback);
-    }
-
     let server: Server & { port: number };
 
     const startServer = () => {
