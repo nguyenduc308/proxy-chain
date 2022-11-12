@@ -8,7 +8,7 @@ import { Buffer } from 'buffer';
  * Parses and validates a HTTP proxy URL. If the proxy requires authentication, then the function
  * starts an open local proxy server that forwards to the upstream proxy.
  */
-export declare const anonymizeProxy: (proxyUrl: string, callback?: ((error: Error | null) => void) | undefined) => Promise<string>;
+export declare const anonymizeProxy: (proxyUrl: string, port: number) => Promise<string>;
 /**
  * Closes anonymous proxy previously started by `anonymizeProxy()`.
  * If proxy was not found or was already closed, the function has no effect
